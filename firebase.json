@@ -4,6 +4,13 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
+    // Rewrites are currently handled by notify function itself by forwarding
+    // request to appropriate handler by using urls of the format
+    // "/notify/changes/system1/"
+    // "/notify/changes/system2/"
+    //
+    // Keeping this here as an example on how to do this urls of the format
+    // "/system/notify/changes/"
     "rewrites": [
       {
         "source": "/system/notify/changes/**",
