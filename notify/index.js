@@ -20,6 +20,7 @@ initializeApp();
 // https://firebase.google.com/docs/functions/get-started
 
 exports.notify = onRequest((request, response) => {
-   logger.info("Notification Received!", {structuredData: true});
-   response.send("Change Notification Received");
+  let url = request.url;
+  logger.info("Notification Received!", {structuredData: true});
+  response.send("Change Notification Received on " + url);
 });
