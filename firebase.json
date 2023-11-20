@@ -3,6 +3,16 @@
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
+  "hosting": {
+    "rewrites": [
+      {
+        "source": "/system/notify/changes/**",
+        "function": {
+          "functionId": "notify"
+        }
+      }
+    ]
+  },
   "functions": [
     {
       "source": "functions",
