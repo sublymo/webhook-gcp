@@ -4,6 +4,12 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     // Rewrites are currently handled by notify function itself by forwarding
     // request to appropriate handler by using urls of the format
     // "/notify/changes/system1/"
@@ -11,6 +17,9 @@
     //
     // Keeping this here as an example on how to do this urls of the format
     // "/system/notify/changes/"
+    //
+    // For more details on URL rewriting see
+    // https://firebase.google.com/docs/hosting/full-config#rewrites
     "rewrites": [
       {
         "source": "/system/notify/changes/**",
@@ -18,7 +27,11 @@
           "functionId": "notify"
         }
       }
-    ]
+    ],
+    // Drops `.html` from uploaded URLs
+    "cleanUrls": true,
+    // Add trailing slashes to URLs
+    "trailingSlash": true
   },
   "functions": [
     {
