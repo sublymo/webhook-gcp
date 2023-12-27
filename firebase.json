@@ -1,8 +1,10 @@
 {
+  // Firestore is configured here
   "firestore": {
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
+  // Firebase Hosting and URL Rewrites are confiured here
   "hosting": {
     "public": "public",
     "ignore": [
@@ -10,33 +12,23 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    // Rewrites are currently handled by notify function itself by forwarding
-    // request to appropriate handler by using urls of the format
-    // "/notify/changes/system1/"
-    // "/notify/changes/system2/"
-    //
-    // Keeping this here as an example on how to do this urls of the format
-    // "/system/notify/changes/"
-    //
-    // For more details on URL rewriting see
-    // https://firebase.google.com/docs/hosting/full-config#rewrites
+    // Make sure that /notify/changes/ is handled by the Receive Function
     "rewrites": [
       {
-        "source": "/system/notify/changes/**",
+        "source": "/notify/changes/**",
         "function": {
-          "functionId": "notify"
+          "functionId": "receive"
         }
       }
     ],
-    // Drops `.html` from uploaded URLs
     "cleanUrls": true,
-    // Add trailing slashes to URLs
     "trailingSlash": true
   },
+  // Cloud Functions are configured here
   "functions": [
     {
-      "source": "functions",
-      "codebase": "default",
+      "source": "webhook/dispatch",
+      "codebase": "dispatch",
       "ignore": [
         "node_modules",
         ".git",
@@ -45,8 +37,18 @@
       ]
     },
     {
-      "source": "notify",
-      "codebase": "notify",
+      "source": "webhook/receive",
+      "codebase": "receive",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ]
+    },
+    {
+      "source": "webhook/process",
+      "codebase": "process",
       "ignore": [
         "node_modules",
         ".git",
