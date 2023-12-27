@@ -13,6 +13,9 @@
       "**/node_modules/**"
     ],
     // Make sure that /notify/changes/ is handled by the Receive Function
+    //
+    // For more details on URL rewriting see
+    // https://firebase.google.com/docs/hosting/full-config#rewrites
     "rewrites": [
       {
         "source": "/notify/changes/**",
@@ -21,10 +24,18 @@
         }
       }
     ],
+    // Drops `.html` from uploaded URLs
     "cleanUrls": true,
+    // Add trailing slashes to URLs
     "trailingSlash": true
   },
   // Cloud Functions are configured here
+  //
+  // To initiale a new function simply run the following command
+  // firebase init functions
+  //
+  // For more details on functions see
+  // https://firebase.google.com/docs/functions/get-started?gen=2nd
   "functions": [
     {
       "source": "webhook/dispatch",
